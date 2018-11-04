@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2018 at 11:16 AM
+-- Generation Time: Nov 04, 2018 at 07:00 PM
 -- Server version: 10.3.8-MariaDB
 -- PHP Version: 7.2.7
 
@@ -123,6 +123,26 @@ INSERT INTO `general_practice` (`id`, `name`, `surname`, `start_contract`, `end_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `nurse`
 --
 
@@ -148,6 +168,18 @@ CREATE TABLE `operation` (
   `operation_room_id` varchar(4) NOT NULL,
   `fee` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -240,6 +272,37 @@ CREATE TABLE `type_room` (
   `room_type` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `surname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthday` date NOT NULL,
+  `blood_group` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `age` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `operation_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `patient_type_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `surname`, `birthday`, `blood_group`, `age`, `gender`, `operation_id`, `patient_type_id`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(4, 'thapakorn', 'pheyporn', '1997-01-01', 'a', '21', 'male', NULL, '098765', 'thapakorn613@gmail.com', NULL, '$2y$10$1tD3gKNct7JRScbIQZzKgeR6kCPvft0WyaBcU7mj3ibWUMgSqYxmG', 'OeviXaFtEx9DEVLWikVrTeawE7jPzs9aswfjCfgsi6RIUCKIUC93XySDOUr5', '2018-11-04 05:31:10', '2018-11-04 05:31:10');
+
 --
 -- Indexes for dumped tables
 --
@@ -273,6 +336,12 @@ ALTER TABLE `general_practice`
   ADD KEY `patient_id_gp` (`patient_id`);
 
 --
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `nurse`
 --
 ALTER TABLE `nurse`
@@ -285,6 +354,12 @@ ALTER TABLE `nurse`
 ALTER TABLE `operation`
   ADD PRIMARY KEY (`operation_id`),
   ADD KEY `operation_room_id` (`operation_room_id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
 
 --
 -- Indexes for table `patient`
@@ -323,6 +398,29 @@ ALTER TABLE `surgeons`
 --
 ALTER TABLE `type_room`
   ADD PRIMARY KEY (`type_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
