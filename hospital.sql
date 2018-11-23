@@ -306,15 +306,17 @@ CREATE TABLE `users` (
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `is_admin` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `surname`, `birthday`, `blood_group`, `age`, `gender`, `operation_id`, `patient_type_id`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(4, 'thapakorn', 'pheyporn', '1997-01-01', 'a', '21', 'male', NULL, '098765', 'thapakorn613@gmail.com', NULL, '$2y$10$1tD3gKNct7JRScbIQZzKgeR6kCPvft0WyaBcU7mj3ibWUMgSqYxmG', 'OeviXaFtEx9DEVLWikVrTeawE7jPzs9aswfjCfgsi6RIUCKIUC93XySDOUr5', '2018-11-04 05:31:10', '2018-11-04 05:31:10');
+INSERT INTO `users` (`id`, `name`, `surname`, `birthday`, `blood_group`, `age`, `gender`, `operation_id`, `patient_type_id`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `is_admin`) VALUES
+(6, 'thapakorn', 'pheyporn', '1997-01-01', 'a', '21', 'male', NULL, '123456', 'thapakorn613@gmail.com', NULL, '$2y$10$Wzni0cwawAheZCSXBAdTjusJBwnLoxGg0dOGFz/OM4w7KzAhBGjT6', 'SKqUaUrUPuycoj29IqBR42exOt6thiv7flldcupEQrvjpWM05e8wzWlHWvRm', '2018-11-06 06:54:06', '2018-11-06 06:54:06', 1),
+(7, 'art', 'ronin', '1997-01-09', 'AB', '21', 'MALE', NULL, '123457', 'thapakorn613@hotmail.com', NULL, '$2y$10$tByFwrwKH2ixGZwBU79LNe8PQKAoUcZ25uo5jYEvyiEwhH2QbHMku', 'ezhA2lNiXuCd3XiQkejuvfQf1RUd8SLEVHJoUagGORMjbkFjOXh2phW8Y6NW', '2018-11-06 06:55:43', '2018-11-06 06:55:43', NULL);
 
 --
 -- Indexes for dumped tables
@@ -440,7 +442,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
