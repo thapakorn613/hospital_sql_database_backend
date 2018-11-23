@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2018 at 07:05 PM
+-- Generation Time: Nov 23, 2018 at 08:40 AM
 -- Server version: 10.3.8-MariaDB
--- PHP Version: 7.2.7
+-- PHP Version: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -240,6 +240,19 @@ CREATE TABLE `room` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `schedule`
+--
+
+CREATE TABLE `schedule` (
+  `schedule_id` int(11) NOT NULL,
+  `time_fix` datetime NOT NULL,
+  `gp_id` char(9) NOT NULL,
+  `patient_id` char(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `surgeons`
 --
 
@@ -390,6 +403,13 @@ ALTER TABLE `room`
   ADD PRIMARY KEY (`room_id`);
 
 --
+-- Indexes for table `schedule`
+--
+ALTER TABLE `schedule`
+  ADD KEY `gp_id` (`gp_id`),
+  ADD KEY `patient_id` (`patient_id`);
+
+--
 -- Indexes for table `surgeons`
 --
 ALTER TABLE `surgeons`
@@ -465,6 +485,13 @@ ALTER TABLE `operation`
 ALTER TABLE `patient`
   ADD CONSTRAINT `operation_id` FOREIGN KEY (`operation_id`) REFERENCES `operation` (`operation_id`),
   ADD CONSTRAINT `patient_type_id` FOREIGN KEY (`patient_type_id`) REFERENCES `patient_type` (`patient_type_id`);
+
+--
+-- Constraints for table `schedule`
+--
+ALTER TABLE `schedule`
+  ADD CONSTRAINT `gp_id` FOREIGN KEY (`gp_id`) REFERENCES `general_practice` (`id`),
+  ADD CONSTRAINT `patient_id` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`);
 
 --
 -- Constraints for table `surgeons`
