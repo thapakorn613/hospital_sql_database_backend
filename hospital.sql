@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2018 at 08:40 AM
+-- Generation Time: Nov 23, 2018 at 10:25 AM
 -- Server version: 10.3.8-MariaDB
 -- PHP Version: 7.2.11
 
@@ -169,6 +169,13 @@ CREATE TABLE `operation` (
   `fee` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `operation`
+--
+
+INSERT INTO `operation` (`operation_id`, `operation_room_id`, `fee`) VALUES
+('1', '1', '2.00');
+
 -- --------------------------------------------------------
 
 --
@@ -199,6 +206,13 @@ CREATE TABLE `patient` (
   `patient_type_id` varchar(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `patient`
+--
+
+INSERT INTO `patient` (`id`, `name`, `surname`, `birthday`, `blood_group`, `age`, `gender`, `operation_id`, `patient_type_id`) VALUES
+('1', 'name', 'surname', '2018-11-14', 'o', 12, 'male', '1', '1');
+
 -- --------------------------------------------------------
 
 --
@@ -210,6 +224,13 @@ CREATE TABLE `patient_type` (
   `name_type` varchar(35) NOT NULL,
   `discount` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `patient_type`
+--
+
+INSERT INTO `patient_type` (`patient_type_id`, `name_type`, `discount`) VALUES
+('1', 'sick', '100.00');
 
 -- --------------------------------------------------------
 
@@ -234,8 +255,17 @@ CREATE TABLE `room` (
   `fee` decimal(10,2) NOT NULL,
   `enter_date` date NOT NULL,
   `exit_date` date NOT NULL,
-  `type_id` int(3) NOT NULL
+  `type_id` int(3) NOT NULL,
+  `status` enum('blank','engaged') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `room`
+--
+
+INSERT INTO `room` (`room_id`, `fee`, `enter_date`, `exit_date`, `type_id`, `status`) VALUES
+('1', '2.00', '2018-11-06', '2018-11-08', 1, 'blank'),
+('2', '2.00', '2018-11-07', '2018-11-22', 1, 'blank');
 
 -- --------------------------------------------------------
 
@@ -247,7 +277,7 @@ CREATE TABLE `schedule` (
   `schedule_id` int(11) NOT NULL,
   `time_fix` datetime NOT NULL,
   `gp_id` char(9) NOT NULL,
-  `patient_id` char(9) NOT NULL
+  `patient_id` char(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -284,6 +314,13 @@ CREATE TABLE `type_room` (
   `type_id` int(3) NOT NULL,
   `room_type` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `type_room`
+--
+
+INSERT INTO `type_room` (`type_id`, `room_type`) VALUES
+(1, '2');
 
 -- --------------------------------------------------------
 
@@ -404,8 +441,8 @@ ALTER TABLE `room`
 -- Indexes for table `schedule`
 --
 ALTER TABLE `schedule`
-  ADD KEY `gp_id` (`gp_id`),
-  ADD KEY `patient_id` (`patient_id`);
+  ADD PRIMARY KEY (`schedule_id`),
+  ADD UNIQUE KEY `time_fix` (`time_fix`);
 
 --
 -- Indexes for table `surgeons`
@@ -435,6 +472,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `schedule`
+--
+ALTER TABLE `schedule`
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -483,13 +526,6 @@ ALTER TABLE `operation`
 ALTER TABLE `patient`
   ADD CONSTRAINT `operation_id` FOREIGN KEY (`operation_id`) REFERENCES `operation` (`operation_id`),
   ADD CONSTRAINT `patient_type_id` FOREIGN KEY (`patient_type_id`) REFERENCES `patient_type` (`patient_type_id`);
-
---
--- Constraints for table `schedule`
---
-ALTER TABLE `schedule`
-  ADD CONSTRAINT `gp_id` FOREIGN KEY (`gp_id`) REFERENCES `general_practice` (`id`),
-  ADD CONSTRAINT `patient_id` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`);
 
 --
 -- Constraints for table `surgeons`
